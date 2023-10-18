@@ -15,7 +15,7 @@ namespace Infrastucture
         {
             services.AddDbContext<AppDbContext>(opts =>
             {
-                opts.UseSqlServer(configuration.GetConnectionString("Default"));
+                opts.UseSqlServer(configuration.GetConnectionString("ConnectionString") ?? "");
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();

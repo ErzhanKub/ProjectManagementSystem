@@ -1,8 +1,10 @@
 ﻿using Application.Contracts;
+using Application.Shared;
+using Domain.Entities;
 
 namespace Application.Projects
 {
-    public record CreateProjectCommand : IRequest<ProjectDto>
+    public record CreateProjectCommand : IRequest<Result<ProjectDto>>
     {
         public ProjectDto? ProjectDto { get; init; }
     }
@@ -18,7 +20,31 @@ namespace Application.Projects
                     RuleFor(c => c.ProjectDto!.Name).NotEmpty().Length(1, 150);
                     RuleFor(c => c.ProjectDto!.Description).Length(2000);
                     RuleFor(c => c.ProjectDto!.CustomerCompanyName).NotEmpty().Length(1, 200);
+                    RuleFor(c => c.ProjectDto!.PerformingCompanyName).NotEmpty().Length(1, 200);
+                    RuleFor(c => c.ProjectDto!.ProjectManager).NotEmpty();
+                    RuleFor(c => c.ProjectDto!.Priority).IsInEnum();
+                    RuleFor(c => c.ProjectDto!.StartDate).LessThan(DateTime.Today);
                 });
+        }
+    }
+
+    internal class CreateProjectHandler : IRequestHandler<CreateProjectCommand, Result<ProjectDto>>
+    {
+        private readonly IProjectRepository _projectRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CreateProjectHandler(IProjectRepository projectRepository, IUnitOfWork unitOfWork)
+        {
+            _projectRepository = projectRepository;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<Result<ProjectDto>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
+        {
+            var project = request.Adapt<Project>();
+            await _projectRepository.CreateAsync(project).ConfigureAwait(false);
+            await _unitOfWork.SaveCommitAsync();
+            return Result.Ok(project.Adapt<ProjectDto>());
         }
     }
 }
