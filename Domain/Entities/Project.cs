@@ -10,9 +10,9 @@ namespace Domain.Entities
         public List<Employee> Employees { get; set; } = new();
         public required string CustomerCompanyName { get; set; }
         public required string PerformingCompanyName { get; set; }
-        public required Employee Supervisor { get; set; }
-        public DateOnly DateStart { get; set; }
-        public DateOnly DateEnd { get; set; }
+        public required Employee ProjectManager { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public Priority Priority { get; set; }
     }
 }
