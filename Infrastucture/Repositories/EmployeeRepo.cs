@@ -10,7 +10,7 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public Task DeleteByIdAsync(params Guid[] Id)
+        public Task<Guid[]> DeleteByIdAsync(params Guid[] id)
         {
             throw new NotImplementedException();
         }
@@ -20,7 +20,12 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Employee entity)
+        public Task<Employee> GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Update(Employee entity)
         {
             throw new NotImplementedException();
         }

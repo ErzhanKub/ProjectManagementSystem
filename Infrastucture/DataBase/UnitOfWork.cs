@@ -20,7 +20,7 @@ namespace Infrastructure.DataBase
         }
 
         /// <inheritdoc/>
-        public Task CommitAsync()
+        public Task SaveCommitAsync()
         {
             return _dbContext.SaveChangesAsync();
         }
