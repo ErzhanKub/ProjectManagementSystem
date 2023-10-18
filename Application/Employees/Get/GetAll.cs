@@ -16,6 +16,8 @@ namespace Application.Employees.Get
         public async Task<IEnumerable<EmployeeDto>> Handle(GetAllEmployeeRequest request, CancellationToken cancellationToken)
         {
             var employees = await _employeeRepository.GetAllAsync();
+            if(employees == null)
+                return Enumerable.Empty<EmployeeDto>();
             return employees.Select(employee => employee.Adapt<EmployeeDto>());
         }
     }
