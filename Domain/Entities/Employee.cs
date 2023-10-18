@@ -1,11 +1,9 @@
-﻿namespace Domain.Entities
+﻿public class Employee
 {
-    public class Employee
-    {
-        public Guid Id { get; set; }
-        public required string Firstname { get; set; }
-        public required string Lastname { get; set; }
-        public required string Email { get; set; }
-        public List<Project> Projects { get; set; } = new();
-    }
+    public Guid Id { get; set; }
+    public string Firstname { get; set; }
+    public string Lastname { get; set; }
+    public string Email { get; set; }
+
+    public List<ProjectEmployee> ProjectEmployees { get; set; } = new List<ProjectEmployee>();
 }

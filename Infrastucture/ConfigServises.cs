@@ -15,7 +15,8 @@ namespace Infrastucture
         {
             services.AddDbContext<AppDbContext>(opts =>
             {
-                opts.UseSqlServer(configuration.GetConnectionString("ConnectionString") ?? "");
+                opts.UseSqlServer(configuration.GetConnectionString("Default") ??
+                    "Server=.; Database=ProjectManagementSystem; Trusted_Connection=SSPI; Encrypt=Optional");
             });
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();

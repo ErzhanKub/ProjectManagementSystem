@@ -45,7 +45,7 @@ namespace Application.Employees
                 Firstname = request.EmployeeDto!.Firstname,
                 Lastname = request.EmployeeDto.Lastname,
                 Email = request.EmployeeDto.Email,
-                Projects = request.EmployeeDto.Projects,
+
             };
 
             await _employeeRepository.CreateAsync(employee).ConfigureAwait(false);

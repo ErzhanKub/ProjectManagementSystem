@@ -44,7 +44,7 @@ namespace Application.Employees
             employee.Firstname = request.EmployeeDto.Firstname;
             employee.Lastname = request.EmployeeDto.Lastname;
             employee.Email = request.EmployeeDto.Email;
-            employee.Projects = request.EmployeeDto.Projects;
+            
 
             await _employeeRepository.Update(employee);
             await _unitOfWork.SaveCommitAsync();
