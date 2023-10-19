@@ -14,7 +14,7 @@
         public GetAllEmployeeHandler(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository ??
-                throw new ArgumentNullException(nameof(employeeRepository)); ;
+                throw new ArgumentNullException(nameof(employeeRepository));
         }
 
         public async Task<Result<IEnumerable<EmployeeProfileDto>>> Handle(GetAllEmployeeRequest request, CancellationToken cancellationToken)

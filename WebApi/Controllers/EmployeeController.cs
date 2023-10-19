@@ -1,5 +1,6 @@
 ﻿using Application.Employees;
 using Application.Employees.Get;
+using Azure.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,23 +22,46 @@ namespace WebApi.Controllers
         {
             var request = new GetAllEmployeeRequest();
             var result = await _mediator.Send(request);
-            return Ok(result.Value);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetOne(GetOneEmployeeRequest request)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOne(Guid id)
         {
-            var result = await _mediator.Send(request);
-            return Ok(result.Value);
+            var result = await _mediator.Send(new GetOneEmployeeRequest { Id = id });
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateEmployeeCommand command)
         {
             var result = await _mediator.Send(command);
-            return Ok(result.Value);
+            if (result.IsSuccess)
+                return Created($"/api/Employee/{result.Value.Id}", result.Value.Id);
+            return BadRequest(result.Reasons);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteEmployeeByIdCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> Update(UpdateEmployeeProfileByIdCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
 
     }
 }
