@@ -1,6 +1,4 @@
-﻿using Application.Contracts;
-
-namespace Application.Projects.Get
+﻿namespace Application.Projects.Get
 {
     public record GetAllProjectRequest : IRequest<Result<IEnumerable<ProjectDto>>> { }
 

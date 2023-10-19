@@ -13,7 +13,7 @@
         }
     }
 
-    internal class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeByIdCommand, Result<Guid[]>>
+    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeByIdCommand, Result<Guid[]>>
     {
         private readonly IEmployeeRepository _employeeRepository;
 

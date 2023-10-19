@@ -1,7 +1,4 @@
-﻿using Application.Contracts;
-using Application.Shared;
-
-namespace Application.Projects
+﻿namespace Application.Projects
 {
     public record UpdateProjectByIdCommand : IRequest<Result<ProjectDto>>
     {

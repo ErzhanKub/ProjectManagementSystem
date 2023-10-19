@@ -1,7 +1,4 @@
-﻿using Application.Contracts;
-using Application.Shared;
-
-namespace Application.Employees
+﻿namespace Application.Employees
 {
     public record UpdateEmployeeByIdCommand : IRequest<Result<EmployeeDto>>
     {

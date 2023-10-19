@@ -1,8 +1,6 @@
-﻿using Application.Contracts;
-
-namespace Application.Employees.Get
+﻿namespace Application.Employees.Get
 {
-    public record GetOneEmployeeRequest : IRequest<Result<EmployeeDto>>
+    public record GetOneEmployeeRequest : IRequest<Result<FullEmployeeDto>>
     {
         public Guid Id { get; init; }
     }
@@ -15,7 +13,7 @@ namespace Application.Employees.Get
         }
     }
 
-    internal class GetOneEmployeeHandler : IRequestHandler<GetOneEmployeeRequest, Result<EmployeeDto>>
+    public class GetOneEmployeeHandler : IRequestHandler<GetOneEmployeeRequest, Result<FullEmployeeDto>>
     {
         private readonly IEmployeeRepository _employeeRepository;
 
@@ -25,12 +23,12 @@ namespace Application.Employees.Get
                 throw new ArgumentNullException(nameof(employeeRepository));
         }
 
-        public async Task<Result<EmployeeDto>> Handle(GetOneEmployeeRequest request, CancellationToken cancellationToken)
+        public async Task<Result<FullEmployeeDto>> Handle(GetOneEmployeeRequest request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             if (employee == null)
-                return Result.Fail<EmployeeDto>("Employee not found.");
-            var response = employee.Adapt<EmployeeDto>();
+                return Result.Fail<FullEmployeeDto>("Employee not found.");
+            var response = employee.Adapt<FullEmployeeDto>();
             return Result.Ok(response);
         }
     }

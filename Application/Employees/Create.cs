@@ -1,8 +1,4 @@
-﻿using Application.Contracts;
-using Application.Shared;
-using Domain.Entities;
-
-
+﻿
 
 namespace Application.Employees
 {
@@ -26,7 +22,7 @@ namespace Application.Employees
         }
     }
 
-    internal class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<EmployeeDto>>
+    public class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<EmployeeDto>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWork _unitOfWork;

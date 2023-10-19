@@ -5,34 +5,37 @@ namespace Infrastucture.DataBase
 {
     public class AppDbContext : DbContext
     {
+        //Проверерить связи
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProjectEmployee>()
-                .HasKey(pe => new { pe.ProjectId, pe.EmployeeId });
-
-            modelBuilder.Entity<ProjectEmployee>()
-                .HasOne(pe => pe.Project)
-                .WithMany(p => p.ProjectEmployees)
-                .HasForeignKey(pe => pe.ProjectId)
-                .OnDelete(DeleteBehavior.Restrict); // Изменено здесь
-
-            modelBuilder.Entity<ProjectEmployee>()
-                .HasOne(pe => pe.Employee)
-                .WithMany(e => e.ProjectEmployees)
-                .HasForeignKey(pe => pe.EmployeeId)
-                .OnDelete(DeleteBehavior.Restrict); // Изменено здесь
-
-            modelBuilder.Entity<Project>()
-                .HasOne(p => p.ProjectManager)
-                .WithMany()
-                .HasForeignKey(p => p.ProjectManagerId)
-                .OnDelete(DeleteBehavior.Restrict); // Изменено здесь
-        }
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<ProjectEmployee> ProjectEmployees { get; set; }
+        public DbSet<CustomTask> Tasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CustomTask>()
+                .HasOne(t => t.Author)
+                .WithMany(e => e.AuthoredTasks)
+                .HasForeignKey(t => t.AuthorId);
+
+            modelBuilder.Entity<CustomTask>()
+                .HasOne(t => t.Executor)
+                .WithMany(e => e.AssignedTasks)
+                .HasForeignKey(t => t.ExecutorId)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Employee>()
+         .HasMany(e => e.MemberProjects)
+         .WithMany(p => p.ProjectEmployees)
+         .UsingEntity(j => j.ToTable("EmployeeProject"));
+
+            modelBuilder.Entity<Project>()
+         .HasOne(p => p.ProjectManager)
+         .WithMany(e => e.ManagedProjects)
+         .HasForeignKey(p => p.ProjectManagerId)
+         .IsRequired(false);
+        }
+
     }
 }

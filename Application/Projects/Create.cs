@@ -1,8 +1,4 @@
-﻿using Application.Contracts;
-using Application.Shared;
-using Domain.Entities;
-
-namespace Application.Projects
+﻿namespace Application.Projects
 {
     public record CreateProjectCommand : IRequest<Result<ProjectDto>>
     {
@@ -18,7 +14,6 @@ namespace Application.Projects
                 () =>
                 {
                     RuleFor(c => c.ProjectDto!.Name).NotEmpty().Length(1, 150);
-                    RuleFor(c => c.ProjectDto!.Description).Length(2000);
                     RuleFor(c => c.ProjectDto!.CustomerCompanyName).NotEmpty().Length(1, 200);
                     RuleFor(c => c.ProjectDto!.PerformingCompanyName).NotEmpty().Length(1, 200);
                     RuleFor(c => c.ProjectDto!.ProjectManager).NotEmpty();

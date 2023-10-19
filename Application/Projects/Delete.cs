@@ -1,6 +1,4 @@
-﻿using Application.Shared;
-
-namespace Application.Projects
+﻿namespace Application.Projects
 {
     public record DeleteProjectByIdCommand : IRequest<Result<Guid[]>>
     {
