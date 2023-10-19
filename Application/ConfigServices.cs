@@ -1,4 +1,5 @@
-﻿using Application.Pipelines;
+﻿using Application.Employees.Get;
+using Application.Pipelines;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -21,7 +22,8 @@ namespace Application
             services.AddMediatR(config => config.RegisterServicesFromAssemblies(
                     Assembly.GetExecutingAssembly()));
 
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(typeof(GetOneEmployeeValidator).Assembly);
+
 
             services.AddTransient(
                typeof(IPipelineBehavior<,>),

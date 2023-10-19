@@ -1,11 +1,11 @@
 ﻿namespace Application.Employees
 {
-    public record UpdateEmployeeByIdCommand : IRequest<Result<EmployeeDto>>
+    public record UpdateEmployeeProfileByIdCommand : IRequest<Result<EmployeeProfileDto>>
     {
-        public EmployeeDto? EmployeeDto { get; init; }
+        public EmployeeProfileDto? EmployeeDto { get; init; }
     }
 
-    public class UpdateEmployeeValidator : AbstractValidator<UpdateEmployeeByIdCommand>
+    public class UpdateEmployeeValidator : AbstractValidator<UpdateEmployeeProfileByIdCommand>
     {
         public UpdateEmployeeValidator()
         {
@@ -15,38 +15,40 @@
                 {
                     RuleFor(c => c.EmployeeDto!.Firstname).NotEmpty().Length(1, 200);
                     RuleFor(c => c.EmployeeDto!.Lastname).NotEmpty().Length(1, 200);
+                    RuleFor(c => c.EmployeeDto!.Patronymic).Length(1,200);
                     RuleFor(c => c.EmployeeDto!.Email).NotEmpty().EmailAddress();
                 });
         }
     }
 
-    internal class UpdateEmployeeHandler : IRequestHandler<UpdateEmployeeByIdCommand, Result<EmployeeDto>>
+    public class UpdateEmployeeProfileHandler : IRequestHandler<UpdateEmployeeProfileByIdCommand, Result<EmployeeProfileDto>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateEmployeeHandler(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
+        public UpdateEmployeeProfileHandler(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public async Task<Result<EmployeeDto>> Handle(UpdateEmployeeByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Result<EmployeeProfileDto>> Handle(UpdateEmployeeProfileByIdCommand request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository.GetByIdAsync(request.EmployeeDto!.Id);
 
             if (employee is null)
-                return Result.Fail<EmployeeDto>("Employee not found");
+                return Result.Fail<EmployeeProfileDto>("Employee not found");
 
             employee.Firstname = request.EmployeeDto.Firstname;
             employee.Lastname = request.EmployeeDto.Lastname;
+            employee.Patronymic = request.EmployeeDto.Patronymic;
             employee.Email = request.EmployeeDto.Email;
-            
+            employee.Role = request.EmployeeDto.Role;
 
-            await _employeeRepository.Update(employee);
+             _employeeRepository.Update(employee);
             await _unitOfWork.SaveCommitAsync();
 
-            var response = employee.Adapt<EmployeeDto>();
+            var response = employee.Adapt<EmployeeProfileDto>();
 
             return Result.Ok(response);
         }

@@ -1,6 +1,6 @@
 ﻿namespace Application.Projects
 {
-    public record UpdateProjectByIdCommand : IRequest<Result<ProjectDto>>
+    public record UpdateProjectByIdCommand : IRequest<Result<FullProjectDto>>
     {
         public Guid Id { get; init; }
     }
@@ -13,7 +13,7 @@
         }
     }
 
-    internal class UpdateProjectHandler : IRequestHandler<UpdateProjectByIdCommand, Result<ProjectDto>>
+    internal class UpdateProjectHandler : IRequestHandler<UpdateProjectByIdCommand, Result<FullProjectDto>>
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -24,7 +24,7 @@
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Result<ProjectDto>> Handle(UpdateProjectByIdCommand request, CancellationToken cancellationToken)
+        public Task<Result<FullProjectDto>> Handle(UpdateProjectByIdCommand request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

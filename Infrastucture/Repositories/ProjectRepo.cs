@@ -15,6 +15,11 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<Project>> FilterByStartDateRangeAsync(DateTime start, DateTime end)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<Project>> GetAllAsync()
         {
             throw new NotImplementedException();
@@ -25,7 +30,12 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Update(Project entity)
+        public Task<IEnumerable<Project>> SortByField(string fieldName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Project entity)
         {
             throw new NotImplementedException();
         }

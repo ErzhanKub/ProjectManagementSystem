@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Shared;
+﻿using Domain.Shared;
 
 namespace Domain.Repositories
 {

@@ -26,16 +26,15 @@ namespace Infrastucture.DataBase
                 .IsRequired(false);
 
             modelBuilder.Entity<Employee>()
-         .HasMany(e => e.MemberProjects)
-         .WithMany(p => p.ProjectEmployees)
-         .UsingEntity(j => j.ToTable("EmployeeProject"));
+                .HasMany(e => e.MemberProjects)
+                .WithMany(p => p.ProjectEmployees)
+                .UsingEntity(j => j.ToTable("EmployeeProject"));
 
             modelBuilder.Entity<Project>()
-         .HasOne(p => p.ProjectManager)
-         .WithMany(e => e.ManagedProjects)
-         .HasForeignKey(p => p.ProjectManagerId)
-         .IsRequired(false);
+                .HasOne(p => p.ProjectManager)
+                .WithMany(e => e.ManagedProjects)
+                .HasForeignKey(p => p.ProjectManagerId)
+                .IsRequired(false);
         }
-
     }
 }

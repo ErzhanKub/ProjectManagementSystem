@@ -1,6 +1,6 @@
 ﻿namespace Application.Projects.Get
 {
-    public record GetOneProjectByIdRequest : IRequest<Result<ProjectDto>>
+    public record GetOneProjectByIdRequest : IRequest<Result<FullProjectDto>>
     {
         public Guid Id { get; init; }
     }
@@ -13,7 +13,7 @@
         }
     }
 
-    internal class GetOneProjectHandler : IRequestHandler<GetOneProjectByIdRequest, Result<ProjectDto>>
+    public class GetOneProjectHandler : IRequestHandler<GetOneProjectByIdRequest, Result<FullProjectDto>>
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -22,12 +22,13 @@
             _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
         }
 
-        public async Task<Result<ProjectDto>> Handle(GetOneProjectByIdRequest request, CancellationToken cancellationToken)
+        public async Task<Result<FullProjectDto>> Handle(GetOneProjectByIdRequest request, CancellationToken cancellationToken)
         {
             var project = await _projectRepository.GetByIdAsync(request.Id).ConfigureAwait(false);
             if (project == null)
-                return Result.Fail<ProjectDto>("Project not found");
-            return Result.Ok(project.Adapt<ProjectDto>());
+                return Result.Fail<FullProjectDto>("Project not found");
+
+            return Result.Ok(project.Adapt<FullProjectDto>());
         }
     }
 }

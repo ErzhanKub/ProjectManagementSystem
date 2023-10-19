@@ -2,7 +2,7 @@
 {
     public record GetAllProjectRequest : IRequest<Result<IEnumerable<ProjectDto>>> { }
 
-    internal class GetAllProjectHandler : IRequestHandler<GetAllProjectRequest, Result<IEnumerable<ProjectDto>>>
+    public class GetAllProjectHandler : IRequestHandler<GetAllProjectRequest, Result<IEnumerable<ProjectDto>>>
     {
         private readonly IProjectRepository _projectRepository;
 
@@ -14,10 +14,23 @@
 
         public async Task<Result<IEnumerable<ProjectDto>>> Handle(GetAllProjectRequest request, CancellationToken cancellationToken)
         {
-            var project = await _projectRepository.GetAllAsync().ConfigureAwait(false);
-            if (project == null)
+            var projects = await _projectRepository.GetAllAsync().ConfigureAwait(false);
+
+            if (projects == null)
                 return new Result<IEnumerable<ProjectDto>>();
-            return Result.Ok(project.Select(project => project.Adapt<ProjectDto>()));
+
+            var response = projects.Select(project => new ProjectDto
+            {
+                Id = project.Id,
+                Name = project.Name,
+                CustomerCompanyName = project.CustomerCompanyName,
+                PerformingCompanyName = project.PerformingCompanyName,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                Priority = project.Priority,
+            }).ToList();
+
+            return Result.Ok((IEnumerable<ProjectDto>)response);
         }
     }
 }

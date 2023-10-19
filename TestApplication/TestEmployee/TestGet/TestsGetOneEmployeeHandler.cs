@@ -1,9 +1,6 @@
-
-using Application.Contracts;
 using Application.Employees.Get;
 using Domain.Entities;
 using Domain.Repositories;
-using Mapster;
 
 public class GetOneEmployeeHandlerTests
 {
@@ -85,7 +82,7 @@ public class GetOneEmployeeHandlerTests
 
         // Assert
         result.IsSuccess.Should().BeTrue();
-        result.Value.Should().BeEquivalentTo(employee.Adapt<FullEmployeeDto>());
+        result.Value.Should().BeEquivalentTo(employee.Adapt<EmployeeDto>());
     }
 
     [Fact]

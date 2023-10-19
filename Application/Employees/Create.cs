@@ -2,9 +2,9 @@
 
 namespace Application.Employees
 {
-    public record CreateEmployeeCommand : IRequest<Result<EmployeeDto>>
+    public record CreateEmployeeCommand : IRequest<Result<EmployeeProfileDto>>
     {
-        public EmployeeDto? EmployeeDto { get; init; }
+        public EmployeeProfileDto? EmployeeDto { get; init; }
     }
 
     public class CreateEmployeeCommandValidator : AbstractValidator<CreateEmployeeCommand>
@@ -22,7 +22,7 @@ namespace Application.Employees
         }
     }
 
-    public class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<EmployeeDto>>
+    public class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<EmployeeProfileDto>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -33,7 +33,7 @@ namespace Application.Employees
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public async Task<Result<EmployeeDto>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<EmployeeProfileDto>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var employee = new Employee
             {
@@ -41,13 +41,12 @@ namespace Application.Employees
                 Firstname = request.EmployeeDto!.Firstname,
                 Lastname = request.EmployeeDto.Lastname,
                 Email = request.EmployeeDto.Email,
-
             };
 
             await _employeeRepository.CreateAsync(employee).ConfigureAwait(false);
             await _unitOfWork.SaveCommitAsync().ConfigureAwait(false);
 
-            var response = employee.Adapt<EmployeeDto>();
+            var response = employee.Adapt<EmployeeProfileDto>();
 
             return Result.Ok(response);
         }
