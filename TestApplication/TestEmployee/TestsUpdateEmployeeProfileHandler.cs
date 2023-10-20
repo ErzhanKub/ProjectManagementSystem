@@ -29,6 +29,7 @@ namespace TestApplication.TestEmployee
                 Lastname = "Test",
                 Patronymic = "User",
                 Email = "test@mail.com",
+                PasswordHash = "qwer",
                 Role = Domain.Enums.Role.Employee
             };
 
@@ -77,6 +78,7 @@ namespace TestApplication.TestEmployee
                     Lastname = "Test",
                     Patronymic = "User",
                     Email = "test@mail.com",
+                    PasswordHash = "sfs",
                     Role = Domain.Enums.Role.Employee
                 }
             };

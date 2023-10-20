@@ -24,7 +24,9 @@ public class CreateEmployeeHandlerTests
         {
             Firstname = "Test",
             Lastname = "User",
+            Patronymic = "tet",
             Email = "test.user@example.com",
+            PasswordHash = "123",
             Role = Domain.Enums.Role.Employee,
         };
         var command = new CreateEmployeeCommand { EmployeeDto = employeeDto };

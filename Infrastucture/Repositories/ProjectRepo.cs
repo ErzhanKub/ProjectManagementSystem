@@ -36,9 +36,12 @@ namespace Infrastucture.Repositories
             return _appDbContext.Projects.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Project?> GetByIdAsync(Guid id)
+        public async Task<Project> GetByIdAsync(Guid id)
         {
-            return await _appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
+            var project = await _appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
+            if (project is null)
+                throw new ArgumentNullException("Project not found");
+            return project;
         }
 
         public Task<IEnumerable<Project>> SortByField(string fieldName)
@@ -46,7 +49,7 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public void Update(Project entity)
+        public async Task Update(Project entity)
         {
             _appDbContext.Projects.Update(entity);
         }

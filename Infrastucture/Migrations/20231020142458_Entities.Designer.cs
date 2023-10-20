@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastucture.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231019085712_NewEntities")]
-    partial class NewEntities
+    [Migration("20231020142458_Entities")]
+    partial class Entities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Infrastucture.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CustomTask", b =>
+            modelBuilder.Entity("Domain.Entities.CustomTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -80,6 +80,10 @@ namespace Infrastucture.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -147,7 +151,7 @@ namespace Infrastucture.Migrations
                     b.ToTable("EmployeeProject", (string)null);
                 });
 
-            modelBuilder.Entity("CustomTask", b =>
+            modelBuilder.Entity("Domain.Entities.CustomTask", b =>
                 {
                     b.HasOne("Domain.Entities.Employee", "Author")
                         .WithMany("AuthoredTasks")

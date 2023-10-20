@@ -1,6 +1,4 @@
-﻿
-
-namespace Application.Employees
+﻿namespace Application.Employees
 {
     public record CreateEmployeeCommand : IRequest<Result<EmployeeProfileDto>>
     {

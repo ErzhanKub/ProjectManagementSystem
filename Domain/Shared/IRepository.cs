@@ -25,7 +25,7 @@
         /// Обновляет существующую сущность в репозитории.
         /// </summary>
         /// <param name="entity"></param>
-        void Update(TEntity entity);
+        Task Update(TEntity entity);
         /// <summary>
         /// Deletes entities by specified identifiers.
         /// Удаляет сущности по указанным идентификаторам.
@@ -33,6 +33,6 @@
         /// <param name="Id"></param>
         /// <returns></returns>
         Task<Guid[]> DeleteByIdAsync(params Guid[] id);
-        Task<TEntity?> GetByIdAsync(Guid id);
+        Task<TEntity> GetByIdAsync(Guid id);
     }
 }

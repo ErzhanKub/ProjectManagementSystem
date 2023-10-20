@@ -15,22 +15,22 @@ namespace Infrastucture.Repositories
         {
             _appDbContext = appDbContext;
         }
-
-        public Task AddEmployeeToProjectAsync(Guid projectId, Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Employee> CheckUserCredentialsAsync(string email, string password)
         {
-            var employee = await _appDbContext.Employees.SingleOrDefaultAsync(e => e.Email == email).ConfigureAwait(false);
-            if (employee is null || await HashPasswordAsync(password).ConfigureAwait(false) != employee.PasswordHash)
-                return default;
+            var employee = await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Email == email).ConfigureAwait(false);
+            if (employee is null)
+                throw new ArgumentNullException("Employee email not found");
+
+            var hashedPassword = HashPassword(password);
+            if (hashedPassword != employee.PasswordHash)
+                throw new ArgumentNullException("Incorrect password");
+
             return employee;
         }
+
         public async Task CreateAsync(Employee employee)
         {
-            employee.PasswordHash = await HashPasswordAsync(employee.PasswordHash);
+            employee.PasswordHash = HashPassword(employee.PasswordHash);
             await _appDbContext.Employees.AddAsync(employee);
         }
 
@@ -46,24 +46,22 @@ namespace Infrastucture.Repositories
             return await _appDbContext.Employees.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Employee?> GetByIdAsync(Guid id)
+        public async Task<Employee> GetByIdAsync(Guid id)
         {
-            return await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            var employee = await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+            if (employee is null)
+                throw new ArgumentNullException("Employee not found");
+            return employee;
         }
 
-        public async Task<string> HashPasswordAsync(string password)
+        public string HashPassword(string password)
         {
             var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
             var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            return await Task.FromResult(hash).ConfigureAwait(false);
+            return hash;
         }
 
-        public Task RemoveEmployeeFromProjectAsync(Guid projectId, Guid employeeId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Employee entity)
+        public async Task Update(Employee entity)
         {
             _appDbContext.Employees.Update(entity);
         }

@@ -22,7 +22,7 @@ namespace Infrastucture.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CustomTask", b =>
+            modelBuilder.Entity("Domain.Entities.CustomTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +59,7 @@ namespace Infrastucture.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tasks", (string)null);
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>
@@ -80,6 +80,10 @@ namespace Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Patronymic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -89,7 +93,7 @@ namespace Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Domain.Entities.Project", b =>
@@ -126,7 +130,7 @@ namespace Infrastucture.Migrations
 
                     b.HasIndex("ProjectManagerId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("EmployeeProject", b =>
@@ -144,7 +148,7 @@ namespace Infrastucture.Migrations
                     b.ToTable("EmployeeProject", (string)null);
                 });
 
-            modelBuilder.Entity("CustomTask", b =>
+            modelBuilder.Entity("Domain.Entities.CustomTask", b =>
                 {
                     b.HasOne("Domain.Entities.Employee", "Author")
                         .WithMany("AuthoredTasks")
