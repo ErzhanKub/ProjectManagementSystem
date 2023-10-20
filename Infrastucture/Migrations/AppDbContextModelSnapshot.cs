@@ -59,7 +59,7 @@ namespace Infrastucture.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>
@@ -89,7 +89,7 @@ namespace Infrastucture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Project", b =>
@@ -126,7 +126,7 @@ namespace Infrastucture.Migrations
 
                     b.HasIndex("ProjectManagerId");
 
-                    b.ToTable("Projects");
+                    b.ToTable("Projects", (string)null);
                 });
 
             modelBuilder.Entity("EmployeeProject", b =>

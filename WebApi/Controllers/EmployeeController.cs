@@ -1,5 +1,6 @@
 ﻿using Application.Employees;
 using Application.Employees.Get;
+using Application.Employees.InteractionWithProject;
 using Azure.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -63,5 +64,22 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
+        [HttpPatch("addToProject")]
+        public async Task<IActionResult> AddToProject(AddEmployeeToProjectCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Successes);
+            return BadRequest(result.Reasons);
+        }
+
+        [HttpPatch("removeFromProject")]
+        public async Task<IActionResult> RemoveFromProject(RemoveEmployeeFromProjectCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Successes);
+            return BadRequest(result.Reasons);
+        }
     }
 }

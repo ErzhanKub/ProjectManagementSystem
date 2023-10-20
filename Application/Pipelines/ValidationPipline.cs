@@ -6,9 +6,7 @@ namespace Application.Pipelines
         : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
         where TResponse : ResultBase<TResponse>, new()
-
     {
-
         private readonly IValidator<TRequest> _validator;
 
         public ValidationPipeline(IValidator<TRequest> validator)
@@ -19,27 +17,22 @@ namespace Application.Pipelines
         public async Task<TResponse> Handle(TRequest request,
             RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            var validResult = _validator.Validate(request);
-            if (validResult != null && validResult.Errors.Any())
+            try
             {
-                var errors = validResult.Errors.MapToErrors();
-                var responseType = typeof(TResponse);
-
-                TResponse? result;
-                if (responseType.IsGenericType)
+                var validResult = _validator.Validate(request);
+                if (validResult != null && validResult.Errors.Any())
                 {
-                    var resultType = responseType.GetGenericArguments()[0];
-                    var invalidResponseType = typeof(Result<>).MakeGenericType(resultType);
-
-                    result = Activator.CreateInstance(invalidResponseType, null) as TResponse;
+                    var errors = validResult.Errors.MapToErrors();
+                    var result = new TResponse();
+                    return result.WithErrors(errors);
                 }
-                else
-                {
-                    result = new TResponse();
-                }
-                return result!.WithErrors(errors);
+                return await next();
             }
-            return await next();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

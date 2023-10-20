@@ -25,8 +25,8 @@ namespace TestApplication.TestProject.TestGet
                 Name = "Project 1",
                 CustomerCompanyName = "Academy",
                 PerformingCompanyName = "Academy",
-                StartDate = DateTime.Now,
-                EndDate = DateTime.Now,
+                StartDate = DateTime.Parse("10.20.2023"),
+                EndDate = DateTime.Parse("10.20.2023"),
                 Priority = 10
             };
 

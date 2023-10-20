@@ -2,6 +2,11 @@
 {
     public record GetAllProjectRequest : IRequest<Result<IEnumerable<ProjectDto>>> { }
 
+    public class GetAllProjectValidator : AbstractValidator<GetAllProjectRequest>
+    {
+        public GetAllProjectValidator() { }
+    }
+
     public class GetAllProjectHandler : IRequestHandler<GetAllProjectRequest, Result<IEnumerable<ProjectDto>>>
     {
         private readonly IProjectRepository _projectRepository;

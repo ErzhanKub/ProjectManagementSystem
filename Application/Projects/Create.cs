@@ -16,8 +16,8 @@
                     RuleFor(c => c.ProjectDto!.Name).NotEmpty().Length(1, 150);
                     RuleFor(c => c.ProjectDto!.CustomerCompanyName).NotEmpty().Length(1, 200);
                     RuleFor(c => c.ProjectDto!.PerformingCompanyName).NotEmpty().Length(1, 200);
-                    RuleFor(c => c.ProjectDto!.Priority).IsInEnum();
-                    RuleFor(c => c.ProjectDto!.StartDate).LessThan(DateTime.Today);
+                    //RuleFor(c => c.ProjectDto!.Priority).IsInEnum();
+                    //RuleFor(c => c.ProjectDto!.StartDate).LessThan(DateOnly.);
                 });
         }
     }

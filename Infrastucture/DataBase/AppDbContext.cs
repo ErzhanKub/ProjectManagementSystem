@@ -29,12 +29,21 @@ namespace Infrastucture.DataBase
                 .HasMany(e => e.MemberProjects)
                 .WithMany(p => p.ProjectEmployees)
                 .UsingEntity(j => j.ToTable("EmployeeProject"));
-
+            
             modelBuilder.Entity<Project>()
                 .HasOne(p => p.ProjectManager)
                 .WithMany(e => e.ManagedProjects)
                 .HasForeignKey(p => p.ProjectManagerId)
                 .IsRequired(false);
+
+
+            modelBuilder.Entity<Project>()
+                .Navigation(p => p.ProjectEmployees).AutoInclude();
+            modelBuilder.Entity<Project>()
+                .Navigation(p => p.Tasks).AutoInclude();
+            modelBuilder.Entity<Project>()
+                .Navigation(p => p.ProjectManager).AutoInclude();
+
         }
     }
 }

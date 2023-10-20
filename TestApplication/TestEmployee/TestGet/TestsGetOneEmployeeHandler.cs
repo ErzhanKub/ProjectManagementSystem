@@ -53,7 +53,7 @@ public class GetOneEmployeeHandlerTests
                     Name = "Some Project Name",
                     CustomerCompanyName = "Bers",
                     PerformingCompanyName = "It Academy",
-                    StartDate= DateTime.Now,
+                    StartDate= DateTime.Parse("11.10.2023"),
                     EndDate =  DateTime.Parse("11.10.2023"),
                     Priority = 10,
                     ProjectManagerId = employeeId,

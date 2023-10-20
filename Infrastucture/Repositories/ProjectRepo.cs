@@ -1,18 +1,29 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastucture.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.Repositories
 {
     internal class ProjectRepo : IProjectRepository
     {
-        public Task CreateAsync(Project entity)
+        private readonly AppDbContext _appDbContext;
+
+        public ProjectRepo(AppDbContext appDbContext)
         {
-            throw new NotImplementedException();
+            _appDbContext = appDbContext;
+        }
+
+        public async Task CreateAsync(Project entity)
+        {
+            await _appDbContext.Projects.AddAsync(entity);
         }
 
         public Task<Guid[]> DeleteByIdAsync(params Guid[] id)
         {
-            throw new NotImplementedException();
+            var projectToDelete = _appDbContext.Projects.Where(p => id.Contains(p.Id));
+            _appDbContext.Projects.RemoveRange(projectToDelete);
+            return Task.FromResult(id);
         }
 
         public Task<IEnumerable<Project>> FilterByStartDateRangeAsync(DateTime start, DateTime end)
@@ -22,12 +33,12 @@ namespace Infrastucture.Repositories
 
         public Task<List<Project>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _appDbContext.Projects.AsNoTracking().ToListAsync();
         }
 
-        public Task<Project> GetByIdAsync(Guid id)
+        public async Task<Project?> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public Task<IEnumerable<Project>> SortByField(string fieldName)
@@ -37,7 +48,7 @@ namespace Infrastucture.Repositories
 
         public void Update(Project entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Projects.Update(entity);
         }
     }
 }
