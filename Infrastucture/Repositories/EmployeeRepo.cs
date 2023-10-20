@@ -2,7 +2,8 @@
 using Domain.Repositories;
 using Infrastucture.DataBase;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Infrastucture.Repositories
 {
@@ -20,9 +21,17 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task CreateAsync(Employee entity)
+        public async Task<Employee> CheckUserCredentialsAsync(string email, string password)
         {
-            await _appDbContext.Employees.AddAsync(entity);
+            var employee = await _appDbContext.Employees.SingleOrDefaultAsync(e => e.Email == email).ConfigureAwait(false);
+            if (employee is null || await HashPasswordAsync(password).ConfigureAwait(false) != employee.PasswordHash)
+                return default;
+            return employee;
+        }
+        public async Task CreateAsync(Employee employee)
+        {
+            employee.PasswordHash = await HashPasswordAsync(employee.PasswordHash);
+            await _appDbContext.Employees.AddAsync(employee);
         }
 
         public Task<Guid[]> DeleteByIdAsync(params Guid[] id)
@@ -40,6 +49,13 @@ namespace Infrastucture.Repositories
         public async Task<Employee?> GetByIdAsync(Guid id)
         {
             return await _appDbContext.Employees.FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<string> HashPasswordAsync(string password)
+        {
+            var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
+            var hash = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            return await Task.FromResult(hash).ConfigureAwait(false);
         }
 
         public Task RemoveEmployeeFromProjectAsync(Guid projectId, Guid employeeId)

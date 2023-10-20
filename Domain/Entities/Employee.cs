@@ -9,6 +9,7 @@ namespace Domain.Entities
         public string Lastname { get; set; } = string.Empty;
         public string Patronymic { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
         public Role Role { get; set; } = Role.Employee;
 
         public List<Project>? ManagedProjects { get; set; } = new();

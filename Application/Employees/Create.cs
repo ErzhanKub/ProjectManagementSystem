@@ -17,6 +17,7 @@ namespace Application.Employees
                 {
                     RuleFor(c => c.EmployeeDto!.Firstname).NotEmpty().Length(1, 200);
                     RuleFor(c => c.EmployeeDto!.Lastname).NotEmpty().Length(1, 200);
+                    RuleFor(c => c.EmployeeDto!.PasswordHash).NotEmpty().Length(1, 200);
                     RuleFor(c => c.EmployeeDto!.Email).NotEmpty().EmailAddress();
                 });
         }
@@ -29,7 +30,7 @@ namespace Application.Employees
 
         public CreateEmployeeHandlar(IEmployeeRepository employeeRepository, IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository)); ;
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
@@ -40,11 +41,14 @@ namespace Application.Employees
                 Id = Guid.NewGuid(),
                 Firstname = request.EmployeeDto!.Firstname,
                 Lastname = request.EmployeeDto.Lastname,
+                Patronymic = request.EmployeeDto!.Patronymic,
                 Email = request.EmployeeDto.Email,
+                PasswordHash = request.EmployeeDto.PasswordHash,
+                Role = request.EmployeeDto.Role,
             };
 
-            await _employeeRepository.CreateAsync(employee).ConfigureAwait(false);
-            await _unitOfWork.SaveCommitAsync().ConfigureAwait(false);
+            await _employeeRepository.CreateAsync(employee);
+            await _unitOfWork.SaveCommitAsync();
 
             var response = employee.Adapt<EmployeeProfileDto>();
 

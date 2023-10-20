@@ -8,7 +8,12 @@
 
     public class RemoveEmployeeFromProjectValidatpr : AbstractValidator<RemoveEmployeeFromProjectCommand>
     {
-        public RemoveEmployeeFromProjectValidatpr() { }
+        public RemoveEmployeeFromProjectValidatpr()
+        {
+
+            RuleFor(p => p.ProjectId).NotEmpty();
+            RuleFor(e => e.EmployeeId).NotEmpty();
+        }
     }
 
     public class RemoveEmployeeFromProjectHandler : IRequestHandler<RemoveEmployeeFromProjectCommand, Result>
@@ -19,9 +24,9 @@
 
         public RemoveEmployeeFromProjectHandler(IEmployeeRepository employeeRepository, IProjectRepository projectRepository, IUnitOfWork unitOfWork)
         {
-            _employeeRepository = employeeRepository;
-            _projectRepository = projectRepository;
-            _unitOfWork = unitOfWork;
+            _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+            _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<Result> Handle(RemoveEmployeeFromProjectCommand request, CancellationToken cancellationToken)
@@ -30,10 +35,12 @@
             var employee = await _employeeRepository.GetByIdAsync(request.EmployeeId);
 
             if (project == null || employee == null)
-                return Result.Fail("Not Found");
-            project.ProjectEmployees.Remove(employee);
+                return Result.Fail("Project or employee not Found");
+
+            project.ProjectEmployees!.Remove(employee);
             _projectRepository.Update(project);
             await _unitOfWork.SaveCommitAsync();
+
             return Result.Ok();
         }
     }

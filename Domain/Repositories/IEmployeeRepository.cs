@@ -7,5 +7,7 @@ namespace Domain.Repositories
     {
         Task AddEmployeeToProjectAsync(Guid projectId, Guid employeeId);
         Task RemoveEmployeeFromProjectAsync(Guid projectId, Guid employeeId);
+        Task<string> HashPasswordAsync(string password);
+        Task<Employee> CheckUserCredentialsAsync(string email, string password);
     }
 }

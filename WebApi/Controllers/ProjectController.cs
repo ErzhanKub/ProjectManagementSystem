@@ -26,10 +26,10 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetOne(GetOneProjectByIdRequest request)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOne(Guid id)
         {
-            var result = await _mediator.Send(request);
+            var result = await _mediator.Send(new GetOneProjectByIdRequest { Id = id });
             if (result.IsSuccess)
                 return Ok(result.Value);
             return BadRequest(result.Reasons);
@@ -53,7 +53,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpPatch]
+        [HttpPatch("update")]
         public async Task<IActionResult> Update(UpdateProjectByIdCommand command)
         {
             var result = await _mediator.Send(command);

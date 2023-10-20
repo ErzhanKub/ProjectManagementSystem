@@ -1,7 +1,6 @@
 ﻿using Application.Employees;
 using Application.Employees.Get;
 using Application.Employees.InteractionWithProject;
-using Azure.Core;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,16 +36,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateEmployeeCommand command)
-        {
-            var result = await _mediator.Send(command);
-            if (result.IsSuccess)
-                return Created($"/api/Employee/{result.Value.Id}", result.Value.Id);
-            return BadRequest(result.Reasons);
-        }
-
-        [HttpDelete]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete(DeleteEmployeeByIdCommand command)
         {
             var result = await _mediator.Send(command);
@@ -55,7 +45,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpPatch]
+        [HttpPatch("update")]
         public async Task<IActionResult> Update(UpdateEmployeeProfileByIdCommand command)
         {
             var result = await _mediator.Send(command);
@@ -69,7 +59,7 @@ namespace WebApi.Controllers
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
-                return Ok(result.Successes);
+                return Ok("Success");
             return BadRequest(result.Reasons);
         }
 
@@ -78,7 +68,7 @@ namespace WebApi.Controllers
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
-                return Ok(result.Successes);
+                return Ok("Success");
             return BadRequest(result.Reasons);
         }
     }

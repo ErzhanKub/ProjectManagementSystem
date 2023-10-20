@@ -2,14 +2,13 @@
 {
     public record UpdateProjectByIdCommand : IRequest<Result<FullProjectDto>>
     {
-        public Guid Id { get; init; }
+        public FullProjectDto? ProjectDto { get; init; }
     }
 
     public class UpdateProjectValidator : AbstractValidator<UpdateProjectByIdCommand>
     {
         public UpdateProjectValidator()
         {
-            RuleFor(c => c.Id).NotEmpty();
         }
     }
 
