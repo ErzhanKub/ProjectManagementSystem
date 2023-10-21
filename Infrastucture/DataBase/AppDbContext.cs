@@ -70,7 +70,6 @@ namespace Infrastucture.DataBase
                 EndDate = DateTime.Now.AddMonths(1),
                 Priority = 1,
                 ProjectManagerId = directorId,
-                ProjectManager = director
             };
 
             var taskId = Guid.NewGuid();
@@ -82,14 +81,13 @@ namespace Infrastucture.DataBase
                 Status = Domain.Enums.StatusTask.InProgress,
                 Priority = 1,
                 ProjectId = projectId,
-                Project = project,
                 AuthorId = directorId,
-                Author = director
             };
 
-            modelBuilder.Entity<CustomTask>().HasData(task);
             modelBuilder.Entity<Employee>().HasData(director);
             modelBuilder.Entity<Project>().HasData(project);
+            modelBuilder.Entity<CustomTask>().HasData(task);
+
 
             base.OnModelCreating(modelBuilder);
 

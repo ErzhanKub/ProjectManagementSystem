@@ -1,33 +1,47 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastucture.DataBase;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.Repositories
 {
-    internal class CustomTaskRepository : ICustomTaskRepository
+    public class CustomTaskRepository : ICustomTaskRepository
     {
-        public Task CreateAsync(CustomTask entity)
+        private readonly AppDbContext _appDbContext;
+
+        public CustomTaskRepository(AppDbContext appDbContext)
         {
-            throw new NotImplementedException();
+            _appDbContext = appDbContext;
+        }
+
+        public async Task CreateAsync(CustomTask entity)
+        {
+            await _appDbContext.Tasks.AddAsync(entity);
         }
 
         public Task<Guid[]> DeleteByIdAsync(params Guid[] id)
         {
-            throw new NotImplementedException();
+            var taskToDelete = _appDbContext.Tasks.Where(t => id.Contains(t.Id));
+            _appDbContext.Tasks.RemoveRange(taskToDelete);
+            return Task.FromResult(id);
         }
 
         public Task<List<CustomTask>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _appDbContext.Tasks.AsNoTracking().ToListAsync();
         }
 
-        public Task<CustomTask> GetByIdAsync(Guid id)
+        public async Task<CustomTask> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var task = await _appDbContext.Tasks.FirstOrDefaultAsync(t => t.Id == id);
+            if (task == null)
+                throw new ArgumentNullException(nameof(task), "Task not found\nTaskRepository");
+            return task;
         }
 
         public void Update(CustomTask entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Tasks.Update(entity);
         }
     }
 }

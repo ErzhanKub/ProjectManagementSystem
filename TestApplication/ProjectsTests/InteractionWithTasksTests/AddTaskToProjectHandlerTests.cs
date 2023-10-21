@@ -1,7 +1,6 @@
 ﻿using Application.Feature.Projects.InteractionWithTask;
 using Domain.Repositories;
 using Application.Shared;
-using Application.Feature.Employees.InteractionWithProject;
 using Domain.Entities;
 
 namespace TestApplication.TestProject.InteractionWithTask

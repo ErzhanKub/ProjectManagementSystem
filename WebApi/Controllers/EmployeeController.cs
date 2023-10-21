@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpDelete()]
+        [HttpDelete]
         public async Task<IActionResult> Delete(DeleteEmployeeByIdCommand command)
         {
             var result = await _mediator.Send(command);

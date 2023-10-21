@@ -2,6 +2,7 @@
 using Application.Feature.Projects.Delete;
 using Application.Feature.Projects.Get.GetAll;
 using Application.Feature.Projects.Get.GetOne;
+using Application.Feature.Projects.SortByField;
 using Application.Feature.Projects.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -32,7 +33,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = "ProjectManager,Director,Employee")]
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetOne(Guid id)
         {
             var result = await _mediator.Send(new GetOneProjectByIdRequest { Id = id });
@@ -63,6 +64,17 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Update(UpdateProjectByIdCommand command)
         {
             var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
+
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
+        [HttpGet("{field}")]
+        public async Task<IActionResult> GetByField(string field)
+        {
+            var request = new SortProjectByFieldRequest { FieldName = field };
+            var result = await _mediator.Send(request);
             if (result.IsSuccess)
                 return Ok(result.Value);
             return BadRequest(result.Reasons);

@@ -26,11 +26,6 @@ namespace Infrastucture.Repositories
             return Task.FromResult(id);
         }
 
-        public Task<IEnumerable<Project>> FilterByStartDateRangeAsync(DateTime start, DateTime end)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<List<Project>> GetAllAsync()
         {
             return _appDbContext.Projects.AsNoTracking().ToListAsync();
@@ -40,13 +35,8 @@ namespace Infrastucture.Repositories
         {
             var project = await _appDbContext.Projects.FirstOrDefaultAsync(p => p.Id == id);
             if (project is null)
-                throw new ArgumentNullException("Project not found");
+                throw new ArgumentNullException(nameof(project),"Project not found\nProjectRepository");
             return project;
-        }
-
-        public Task<IEnumerable<Project>> SortByField(string fieldName)
-        {
-            throw new NotImplementedException();
         }
 
         public void Update(Project entity)
