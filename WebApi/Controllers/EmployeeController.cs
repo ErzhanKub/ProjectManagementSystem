@@ -1,7 +1,10 @@
-﻿using Application.Employees;
-using Application.Employees.Get;
-using Application.Employees.InteractionWithProject;
+﻿using Application.Feature.Employees.Delete;
+using Application.Feature.Employees.Get.GetAll;
+using Application.Feature.Employees.Get.GetOne;
+using Application.Feature.Employees.InteractionWithProject;
+using Application.Feature.Employees.Update;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -17,6 +20,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Roles = "ProjectManager,Director")]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -27,6 +31,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
+        [Authorize(Roles = "ProjectManager,Director")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(Guid id)
         {
@@ -36,7 +41,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete()]
         public async Task<IActionResult> Delete(DeleteEmployeeByIdCommand command)
         {
             var result = await _mediator.Send(command);
@@ -46,7 +51,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPatch("update")]
-        public async Task<IActionResult> Update(UpdateEmployeeProfileByIdCommand command)
+        public async Task<IActionResult> Update(UpdateEmployeeByIdCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
@@ -54,21 +59,33 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
+
+        [Authorize(Roles = "ProjectManager,Director")]
         [HttpPatch("addToProject")]
         public async Task<IActionResult> AddToProject(AddEmployeeToProjectCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
-                return Ok("Success");
+                return Ok("Added");
             return BadRequest(result.Reasons);
         }
 
+        [Authorize(Roles = "ProjectManager,Director")]
         [HttpPatch("removeFromProject")]
         public async Task<IActionResult> RemoveFromProject(RemoveEmployeeFromProjectCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
-                return Ok("Success");
+                return Ok("Deleted");
+            return BadRequest(result.Reasons);
+        }
+
+        [HttpPatch("appoint")]
+        public async Task<IActionResult> Appoint(AppointEmployeeCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok("Appointed");
             return BadRequest(result.Reasons);
         }
     }

@@ -70,6 +70,7 @@ builder.Services.AddAuthorization(opts =>
 {
     opts.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
+        .RequireRole("Director")
         .Build();
 });
 

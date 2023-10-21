@@ -20,7 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Employees\InteractionWithTask\" />
+    <Folder Include="Feature\Employees\InteractionWithTasks\" />
+    <Folder Include="Feature\Tasks\Create\" />
+    <Folder Include="Feature\Tasks\Delete\" />
+    <Folder Include="Feature\Tasks\Get\" />
+    <Folder Include="Feature\Tasks\Update\" />
   </ItemGroup>
 
 </Project>

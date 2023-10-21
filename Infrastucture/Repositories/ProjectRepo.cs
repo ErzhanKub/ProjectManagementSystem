@@ -49,7 +49,7 @@ namespace Infrastucture.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task Update(Project entity)
+        public void Update(Project entity)
         {
             _appDbContext.Projects.Update(entity);
         }

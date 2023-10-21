@@ -1,6 +1,10 @@
-﻿using Application.Projects;
-using Application.Projects.Get;
+﻿using Application.Feature.Projects.Create;
+using Application.Feature.Projects.Delete;
+using Application.Feature.Projects.Get.GetAll;
+using Application.Feature.Projects.Get.GetOne;
+using Application.Feature.Projects.Update;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -16,6 +20,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
 
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,6 +31,7 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(Guid id)
         {

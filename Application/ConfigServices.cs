@@ -1,4 +1,4 @@
-﻿using Application.Employees.Get;
+﻿using Application.Feature.Employees.Get.GetOne;
 using Application.Pipelines;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

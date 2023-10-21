@@ -1,5 +1,5 @@
-﻿using Application.Employees;
-using Application.Users.Commands;
+﻿using Application.Feature.Employees.Create;
+using Application.Feature.Employees.Login;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace WebApi.Controllers
         {
             var token = await _mediator.Send(query);
             if (token.IsSuccess)
-                return Ok(token);
+                return Ok(token.Value);
             return BadRequest(token.Reasons);
         }
 

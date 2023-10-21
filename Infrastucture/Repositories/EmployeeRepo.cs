@@ -61,7 +61,7 @@ namespace Infrastucture.Repositories
             return hash;
         }
 
-        public async Task Update(Employee entity)
+        public void Update(Employee entity)
         {
             _appDbContext.Employees.Update(entity);
         }
