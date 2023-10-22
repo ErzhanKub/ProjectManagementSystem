@@ -25,7 +25,7 @@ namespace Application.Tests.Feature.Employees.Delete
             };
             var handler = new DeleteEmployeeHandler(_employeeRepositoryMock.Object, _unitOfWorkMock.Object);
 
-            _employeeRepositoryMock.Setup(x => x.DeleteByIdAsync(It.IsAny<Guid[]>()))
+            _employeeRepositoryMock.Setup(x => x.DeleteRangeAsync(It.IsAny<Guid[]>()))
                 .ReturnsAsync(command.Id);
 
             // Act
@@ -34,7 +34,7 @@ namespace Application.Tests.Feature.Employees.Delete
             // Assert
             result.IsSuccess.Should().BeTrue();
             result.Value.Should().BeEquivalentTo(command.Id);
-            _employeeRepositoryMock.Verify(x => x.DeleteByIdAsync(It.IsAny<Guid[]>()), Times.Once);
+            _employeeRepositoryMock.Verify(x => x.DeleteRangeAsync(It.IsAny<Guid[]>()), Times.Once);
             _unitOfWorkMock.Verify(x => x.SaveCommitAsync(), Times.Once);
         }
     }

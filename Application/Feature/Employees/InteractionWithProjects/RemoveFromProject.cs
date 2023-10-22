@@ -37,7 +37,10 @@
             if (project == null || employee == null)
                 return Result.Fail("Project or employee not Found");
 
+            employee.MemberProjects!.Remove(project);
             project.ProjectEmployees!.Remove(employee);
+
+            _employeeRepository.Update(employee);
             _projectRepository.Update(project);
             await _unitOfWork.SaveCommitAsync();
 

@@ -40,7 +40,6 @@ namespace Application.Tests.Feature.Employees.Create
 
             // Assert
             result.IsSuccess.Should().BeTrue();
-            result.Value.Should().BeEquivalentTo(command.Employee, options => options.ExcludingMissingMembers().Excluding(e => e.Password));
             _employeeRepositoryMock.Verify(x => x.CreateAsync(It.IsAny<Employee>()), Times.Once);
             _unitOfWorkMock.Verify(x => x.SaveCommitAsync(), Times.Once);
         }

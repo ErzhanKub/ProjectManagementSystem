@@ -25,7 +25,7 @@ namespace Application.Feature.Tasks.Create
         }
     }
 
-    public class CreateTaskHandler : IRequestHandler<CreateTaskCommand, Result<ResponseTaskDto>>
+    internal class CreateTaskHandler : IRequestHandler<CreateTaskCommand, Result<ResponseTaskDto>>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IEmployeeRepository _employeeRepository;

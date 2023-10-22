@@ -1,4 +1,6 @@
-﻿namespace Application.Feature.Projects.Get.GetAll
+﻿using Application.Feature.Projects.Get.GetAll.Contracts;
+
+namespace Application.Feature.Projects.Get.GetAll
 {
     public record GetAllProjectRequest : IRequest<Result<IEnumerable<ProjectDto>>> { }
 

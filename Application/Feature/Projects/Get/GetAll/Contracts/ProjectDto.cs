@@ -1,6 +1,6 @@
-﻿namespace Application.Feature.Projects.Get.SortByField
+﻿namespace Application.Feature.Projects.Get.GetAll.Contracts
 {
-    public record ProjectDtoInfo
+    public record ProjectDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

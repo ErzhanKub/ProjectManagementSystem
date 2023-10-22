@@ -1,4 +1,5 @@
 ﻿using Application.Feature.Projects.Get.GetAll;
+using Application.Feature.Projects.Get.GetAll.Contracts;
 using Domain.Entities;
 using Domain.Repositories;
 

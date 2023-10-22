@@ -18,26 +18,30 @@
     public class AddTaskToProjectHandler : IRequestHandler<AddTaskToProjectCommand, Result>
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly ITaskRepository _customTaskRepository;
+        private readonly ITaskRepository _taskRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public AddTaskToProjectHandler(IProjectRepository projectRepository, ITaskRepository customTaskRepository, IUnitOfWork unitOfWork)
         {
             _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
-            _customTaskRepository = customTaskRepository ?? throw new ArgumentNullException(nameof(customTaskRepository));
+            _taskRepository = customTaskRepository ?? throw new ArgumentNullException(nameof(customTaskRepository));
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<Result> Handle(AddTaskToProjectCommand request, CancellationToken cancellationToken)
         {
             var project = await _projectRepository.GetByIdAsync(request.ProjectId);
-            var task = await _customTaskRepository.GetByIdAsync(request.TaskId);
+            var task = await _taskRepository.GetByIdAsync(request.TaskId);
 
             if (project == null || task == null)
                 return Result.Fail("Project or task not found");
 
+            task.ProjectId = project.Id;
+            task.Project = project;
+
             project.Tasks!.Add(task);
 
+            _taskRepository.Update(task);
             _projectRepository.Update(project);
             await _unitOfWork.SaveCommitAsync();
 

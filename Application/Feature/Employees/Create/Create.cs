@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Employees.Create
 {
-    public record CreateEmployeeCommand : IRequest<Result<CreateEmployeeDto>>
+    public record CreateEmployeeCommand : IRequest<Result<Guid>>
     {
         public CreateEmployeeDto? Employee { get; init; }
     }
@@ -21,7 +21,7 @@
         }
     }
 
-    public class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<CreateEmployeeDto>>
+    public class CreateEmployeeHandlar : IRequestHandler<CreateEmployeeCommand, Result<Guid>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -32,7 +32,7 @@
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        public async Task<Result<CreateEmployeeDto>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(CreateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var employee = new Employee
             {
@@ -48,7 +48,7 @@
             await _employeeRepository.CreateAsync(employee);
             await _unitOfWork.SaveCommitAsync();
 
-            return Result.Ok(request.Employee);
+            return Result.Ok(employee.Id);
         }
     }
 }

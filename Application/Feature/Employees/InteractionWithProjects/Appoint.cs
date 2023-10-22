@@ -40,6 +40,7 @@
             project.ProjectManagerId = employee.Id;
             project.ProjectManager = employee;
             employee.Role = Domain.Enums.Role.ProjectManager;
+            employee.ManagedProjects!.Add(project);
 
             _employeeRepository.Update(employee);
             _projectRepository.Update(project);

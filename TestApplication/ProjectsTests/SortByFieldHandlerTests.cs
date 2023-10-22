@@ -1,4 +1,4 @@
-﻿using Application.Feature.Projects.Get.SortByField;
+﻿using Application.Feature.Projects.Get.GetAll;
 using Domain.Entities;
 using Domain.Repositories;
 
@@ -25,7 +25,7 @@ namespace ApplicationTests.ProjectsTests
             };
             _projectRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(projects);
 
-            var command = new SortProjectByFieldRequest { FieldName = "Name" };
+            var command = new SortProjectsByFieldRequest { FieldName = "Name" };
             var handler = new SortProjectByFieldHandler(_projectRepositoryMock.Object);
 
             // Act

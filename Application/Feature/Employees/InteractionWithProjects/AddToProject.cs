@@ -38,6 +38,7 @@
                 return Result.Fail("Project or employee not Found");
 
             employee.Role = Domain.Enums.Role.Employee;
+            employee.MemberProjects!.Add(project);
             project.ProjectEmployees!.Add(employee);
 
             _employeeRepository.Update(employee);

@@ -1,5 +1,8 @@
 ﻿using Application.Feature.Tasks.Create;
 using Application.Feature.Tasks.Delete;
+using Application.Feature.Tasks.Get.GetAll;
+using Application.Feature.Tasks.Get.GetOne;
+using Application.Feature.Tasks.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +22,7 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = "ProjectManager,Director,Employee")]
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create(CreateTaskCommand command)
         {
             var currentUser = HttpContext.User;
@@ -63,6 +66,39 @@ namespace WebApi.Controllers
             if (result.IsSuccess)
                 return Ok(result.Value);
 
+            return BadRequest(result.Reasons);
+        }
+
+
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var request = new GetAllTasksRequest();
+            var result = await _mediator.Send(request);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
+
+
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetOne(GetOneTaskRequest request)
+        {
+            var result = await _mediator.Send(request);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
+
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
+        [HttpGet("update")]
+        public async Task<IActionResult> Update(UpdateTaskCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.IsSuccess)
+                return Ok(result.Value);
             return BadRequest(result.Reasons);
         }
     }

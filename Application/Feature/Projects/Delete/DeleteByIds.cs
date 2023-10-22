@@ -25,7 +25,7 @@
 
         public async Task<Result<Guid[]>> Handle(DeleteProjectByIdsCommand request, CancellationToken cancellationToken)
         {
-            var response = await projectRepository.DeleteByIdAsync(request.Id!);
+            var response = await projectRepository.DeleteRangeAsync(request.Id!);
             if (response != null)
             {
                 await unitOfWork.SaveCommitAsync();

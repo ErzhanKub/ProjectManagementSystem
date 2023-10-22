@@ -32,7 +32,7 @@
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Guid[]> DeleteByIdAsync(params Guid[] id);
+        Task<Guid[]> DeleteRangeAsync(params Guid[] id);
         Task<TEntity> GetByIdAsync(Guid id);
     }
 }

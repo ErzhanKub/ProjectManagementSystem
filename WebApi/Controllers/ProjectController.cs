@@ -2,7 +2,6 @@
 using Application.Feature.Projects.Delete;
 using Application.Feature.Projects.Get.GetAll;
 using Application.Feature.Projects.Get.GetOne;
-using Application.Feature.Projects.Get.SortByField;
 using Application.Feature.Projects.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +72,17 @@ namespace WebApi.Controllers
         [HttpGet("{field}")]
         public async Task<IActionResult> GetByField(string field)
         {
-            var request = new SortProjectByFieldRequest { FieldName = field };
+            var request = new SortProjectsByFieldRequest { FieldName = field };
+            var result = await _mediator.Send(request);
+            if (result.IsSuccess)
+                return Ok(result.Value);
+            return BadRequest(result.Reasons);
+        }
+
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
+        [HttpPost("date")]
+        public async Task<IActionResult> GetByDate(GetProjectsByDateRequest request)
+        {
             var result = await _mediator.Send(request);
             if (result.IsSuccess)
                 return Ok(result.Value);

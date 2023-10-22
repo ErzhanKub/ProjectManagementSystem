@@ -15,7 +15,7 @@
         }
     }
 
-    public class DeleteTaskByIdsHandler : IRequestHandler<DeleteTaskByIdsCommand, Result<Guid[]>>
+    internal class DeleteTaskByIdsHandler : IRequestHandler<DeleteTaskByIdsCommand, Result<Guid[]>>
     {
         private readonly ITaskRepository _taskRepository;
         private readonly IEmployeeRepository _employeeRepository;
@@ -40,7 +40,7 @@
 
             var deletedTaskIds = tasksToDelete.Select(t => t.Id).ToArray();
 
-            await _taskRepository.DeleteByIdAsync(deletedTaskIds);
+            await _taskRepository.DeleteRangeAsync(deletedTaskIds);
             await _unitOfWork.SaveCommitAsync();
 
             return Result.Ok(deletedTaskIds);

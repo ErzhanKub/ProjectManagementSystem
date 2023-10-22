@@ -27,7 +27,7 @@
 
         public async Task<Result<Guid[]>> Handle(DeleteEmployeeByIdsCommand request, CancellationToken cancellationToken)
         {
-            var response = await _employeeRepository.DeleteByIdAsync(request.Id!).ConfigureAwait(false);
+            var response = await _employeeRepository.DeleteRangeAsync(request.Id!).ConfigureAwait(false);
             if (response != null)
             {
                 await _unitOfWork.SaveCommitAsync();

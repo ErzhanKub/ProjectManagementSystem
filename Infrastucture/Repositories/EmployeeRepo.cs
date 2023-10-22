@@ -34,7 +34,7 @@ namespace Infrastucture.Repositories
             await _appDbContext.Employees.AddAsync(employee);
         }
 
-        public Task<Guid[]> DeleteByIdAsync(params Guid[] id)
+        public Task<Guid[]> DeleteRangeAsync(params Guid[] id)
         {
             var employeesToDelete = _appDbContext.Employees.Where(e => id.Contains(e.Id));
             _appDbContext.Employees.RemoveRange(employeesToDelete);

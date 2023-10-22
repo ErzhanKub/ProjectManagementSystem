@@ -3,7 +3,7 @@ using WebApi.Dtos;
 
 namespace WebApi.Middlewere
 {
-    public class ExceptionHandlingMiddlwere
+    public class ExceptionHandlingMiddlwere 
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlingMiddlwere> _logger;

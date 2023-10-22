@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)
-                return Created($"/api/Employee/{result.Value.Id}", result.Value.Id);
+                return Created($"/api/Employee/{result.Value}", result.Value);
             return BadRequest(result.Reasons);
         }
     }
