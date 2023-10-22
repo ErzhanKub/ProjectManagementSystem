@@ -27,7 +27,7 @@ namespace WebApi.Controllers
                 return Ok(token.Value);
             return BadRequest(token.Reasons);
         }
-
+        [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> Create(CreateEmployeeCommand command)
         {

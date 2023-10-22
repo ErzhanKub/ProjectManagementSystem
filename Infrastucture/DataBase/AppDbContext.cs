@@ -60,7 +60,7 @@ namespace Infrastucture.DataBase
                 Lastname = "Doe",
                 Patronymic = "Director",
                 Email = "admin@mail.com",
-                PasswordHash = "hashedpassword",
+                PasswordHash = "9c6d405bba2db24bfbd22fc7ff74b39bd9c5e9c6ce66299c6519be517e6ed7c6",
                 Role = Domain.Enums.Role.Director
             };
 

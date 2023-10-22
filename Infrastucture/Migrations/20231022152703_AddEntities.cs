@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Infrastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class Entities : Migration
+    public partial class AddEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -107,6 +108,21 @@ namespace Infrastucture.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Email", "Firstname", "Lastname", "PasswordHash", "Patronymic", "Role" },
+                values: new object[] { new Guid("6e9464e4-f317-445f-a07e-448971176ef6"), "admin@mail.com", "John", "Doe", "9c6d405bba2db24bfbd22fc7ff74b39bd9c5e9c6ce66299c6519be517e6ed7c6", "Director", 3 });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "Id", "CustomerCompanyName", "EndDate", "Name", "PerformingCompanyName", "Priority", "ProjectManagerId", "StartDate" },
+                values: new object[] { new Guid("d5485b6d-02e4-49a5-98b6-9488c6da33e4"), "Test Company", new DateTime(2023, 11, 22, 21, 27, 3, 296, DateTimeKind.Local).AddTicks(7402), "Test Project", "Test Company", 1, new Guid("6e9464e4-f317-445f-a07e-448971176ef6"), new DateTime(2023, 10, 22, 21, 27, 3, 296, DateTimeKind.Local).AddTicks(7395) });
+
+            migrationBuilder.InsertData(
+                table: "Tasks",
+                columns: new[] { "Id", "AuthorId", "Comment", "ExecutorId", "Name", "Priority", "ProjectId", "Status" },
+                values: new object[] { new Guid("0d20c732-bafd-4b3d-bc7d-c638dc5ea896"), new Guid("6e9464e4-f317-445f-a07e-448971176ef6"), "This is a test task", null, "Test Task", 1, new Guid("d5485b6d-02e4-49a5-98b6-9488c6da33e4"), 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeProject_ProjectEmployeesId",

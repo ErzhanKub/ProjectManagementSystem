@@ -60,6 +60,18 @@ namespace Infrastucture.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("Tasks");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0d20c732-bafd-4b3d-bc7d-c638dc5ea896"),
+                            AuthorId = new Guid("6e9464e4-f317-445f-a07e-448971176ef6"),
+                            Comment = "This is a test task",
+                            Name = "Test Task",
+                            Priority = 1,
+                            ProjectId = new Guid("d5485b6d-02e4-49a5-98b6-9488c6da33e4"),
+                            Status = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>
@@ -94,6 +106,18 @@ namespace Infrastucture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6e9464e4-f317-445f-a07e-448971176ef6"),
+                            Email = "admin@mail.com",
+                            Firstname = "John",
+                            Lastname = "Doe",
+                            PasswordHash = "9c6d405bba2db24bfbd22fc7ff74b39bd9c5e9c6ce66299c6519be517e6ed7c6",
+                            Patronymic = "Director",
+                            Role = 3
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Project", b =>
@@ -131,6 +155,19 @@ namespace Infrastucture.Migrations
                     b.HasIndex("ProjectManagerId");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d5485b6d-02e4-49a5-98b6-9488c6da33e4"),
+                            CustomerCompanyName = "Test Company",
+                            EndDate = new DateTime(2023, 11, 22, 21, 27, 3, 296, DateTimeKind.Local).AddTicks(7402),
+                            Name = "Test Project",
+                            PerformingCompanyName = "Test Company",
+                            Priority = 1,
+                            ProjectManagerId = new Guid("6e9464e4-f317-445f-a07e-448971176ef6"),
+                            StartDate = new DateTime(2023, 10, 22, 21, 27, 3, 296, DateTimeKind.Local).AddTicks(7395)
+                        });
                 });
 
             modelBuilder.Entity("EmployeeProject", b =>
