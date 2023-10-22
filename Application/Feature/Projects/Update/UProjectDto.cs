@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Projects.Update
 {
-    public class UProjectDto
+    public record UProjectDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

@@ -8,13 +8,13 @@ namespace TestApplication.TestProject.InteractionWithTask
     public class RemoveTaskToProjectHandlerTests
     {
         private readonly Mock<IProjectRepository> _projectRepositoryMock;
-        private readonly Mock<ICustomTaskRepository> _customTaskRepositoryMock;
+        private readonly Mock<ITaskRepository> _customTaskRepositoryMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
         public RemoveTaskToProjectHandlerTests()
         {
             _projectRepositoryMock = new Mock<IProjectRepository>();
-            _customTaskRepositoryMock = new Mock<ICustomTaskRepository>();
+            _customTaskRepositoryMock = new Mock<ITaskRepository>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
         }
 

@@ -2,7 +2,7 @@
 
 namespace Application.Feature.Employees.Create
 {
-    public class CreateEmployeeDto
+    public record CreateEmployeeDto
     {
         public Guid Id { get; set; }
         public required string Firstname { get; set; }

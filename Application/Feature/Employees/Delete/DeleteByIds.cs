@@ -1,11 +1,11 @@
 ﻿namespace Application.Feature.Employees.Delete
 {
-    public record DeleteEmployeeByIdCommand : IRequest<Result<Guid[]>>
+    public record DeleteEmployeeByIdsCommand : IRequest<Result<Guid[]>>
     {
         public Guid[]? Id { get; init; }
     }
 
-    public class DeleteEmployeeValidator : AbstractValidator<DeleteEmployeeByIdCommand>
+    public class DeleteEmployeeValidator : AbstractValidator<DeleteEmployeeByIdsCommand>
     {
         public DeleteEmployeeValidator()
         {
@@ -13,7 +13,7 @@
         }
     }
 
-    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeByIdCommand, Result<Guid[]>>
+    public class DeleteEmployeeHandler : IRequestHandler<DeleteEmployeeByIdsCommand, Result<Guid[]>>
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -25,7 +25,7 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<Guid[]>> Handle(DeleteEmployeeByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid[]>> Handle(DeleteEmployeeByIdsCommand request, CancellationToken cancellationToken)
         {
             var response = await _employeeRepository.DeleteByIdAsync(request.Id!).ConfigureAwait(false);
             if (response != null)

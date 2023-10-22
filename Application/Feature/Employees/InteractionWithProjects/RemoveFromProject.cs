@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Employees.InteractionWithProject
 {
-    public class RemoveEmployeeFromProjectCommand : IRequest<Result>
+    public record RemoveEmployeeFromProjectCommand : IRequest<Result>
     {
         public Guid ProjectId { get; init; }
         public Guid EmployeeId { get; init; }

@@ -2,7 +2,7 @@
 using Application.Feature.Projects.Delete;
 using Application.Feature.Projects.Get.GetAll;
 using Application.Feature.Projects.Get.GetOne;
-using Application.Feature.Projects.SortByField;
+using Application.Feature.Projects.Get.SortByField;
 using Application.Feature.Projects.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteProjectByIdCommand command)
+        public async Task<IActionResult> Delete(DeleteProjectByIdsCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)

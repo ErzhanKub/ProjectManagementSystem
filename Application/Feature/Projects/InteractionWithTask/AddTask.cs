@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Projects.InteractionWithTask
 {
-    public class AddTaskToProjectCommand : IRequest<Result>
+    public record AddTaskToProjectCommand : IRequest<Result>
     {
         public Guid ProjectId { get; init; }
         public Guid TaskId { get; init; }
@@ -18,10 +18,10 @@
     public class AddTaskToProjectHandler : IRequestHandler<AddTaskToProjectCommand, Result>
     {
         private readonly IProjectRepository _projectRepository;
-        private readonly ICustomTaskRepository _customTaskRepository;
+        private readonly ITaskRepository _customTaskRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddTaskToProjectHandler(IProjectRepository projectRepository, ICustomTaskRepository customTaskRepository, IUnitOfWork unitOfWork)
+        public AddTaskToProjectHandler(IProjectRepository projectRepository, ITaskRepository customTaskRepository, IUnitOfWork unitOfWork)
         {
             _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
             _customTaskRepository = customTaskRepository ?? throw new ArgumentNullException(nameof(customTaskRepository));

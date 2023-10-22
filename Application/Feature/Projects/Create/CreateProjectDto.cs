@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Projects.Create
 {
-    public class CreateProjectDto
+    public record CreateProjectDto
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }

@@ -15,6 +15,6 @@ namespace Application.Feature.Projects.Get.GetOne
         public Guid? ProjectManagerId { get; set; }
 
         public List<EmployeeProfileDto>? ProjectEmployees { get; set; } = new();
-        public List<CustomTaskDto>? Tasks { get; set; } = new();
+        public List<TaskDto>? Tasks { get; set; } = new();
     }
 }

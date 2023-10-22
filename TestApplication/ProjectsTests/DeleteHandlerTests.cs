@@ -19,7 +19,7 @@ namespace TestApplication.TestProject
         public async Task Handle_ValidCommand_ReturnsOk()
         {
             // Arrange
-            var command = new DeleteProjectByIdCommand { Id = new Guid[] { Guid.NewGuid() } };
+            var command = new DeleteProjectByIdsCommand { Id = new Guid[] { Guid.NewGuid() } };
             var handler = new DeleteProjectHandler(_projectRepositoryMock.Object, _unitOfWorkMock.Object);
 
             // Act

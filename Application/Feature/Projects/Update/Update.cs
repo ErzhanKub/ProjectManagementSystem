@@ -28,8 +28,8 @@
 
         public UpdateProjectHandler(IProjectRepository projectRepository, IUnitOfWork unitOfWork)
         {
-            _projectRepository = projectRepository;
-            _unitOfWork = unitOfWork;
+            _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         public async Task<Result<UProjectDto>> Handle(UpdateProjectByIdCommand request, CancellationToken cancellationToken)

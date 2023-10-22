@@ -39,6 +39,11 @@ namespace Infrastucture.DataBase
             modelBuilder.Entity<Employee>()
                 .Navigation(e => e.MemberProjects).AutoInclude(false);
 
+            modelBuilder.Entity<Employee>()
+                .Navigation(e => e.AssignedTasks).AutoInclude();
+            modelBuilder.Entity<Employee>()
+               .Navigation(e => e.AuthoredTasks).AutoInclude();
+
             modelBuilder.Entity<Project>()
                 .Navigation(p => p.ProjectEmployees).AutoInclude();
 
@@ -54,7 +59,7 @@ namespace Infrastucture.DataBase
                 Firstname = "John",
                 Lastname = "Doe",
                 Patronymic = "Director",
-                Email = "john.doe@example.com",
+                Email = "admin@mail.com",
                 PasswordHash = "hashedpassword",
                 Role = Domain.Enums.Role.Director
             };

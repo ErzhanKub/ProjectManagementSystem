@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Projects.Get.GetAll
 {
-    public class ProjectDto
+    public record ProjectDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

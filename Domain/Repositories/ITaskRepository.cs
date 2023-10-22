@@ -3,7 +3,7 @@ using Domain.Shared;
 
 namespace Domain.Repositories
 {
-    public interface ICustomTaskRepository : IRepository<CustomTask>
+    public interface ITaskRepository : IRepository<CustomTask>
     {
     }
 }

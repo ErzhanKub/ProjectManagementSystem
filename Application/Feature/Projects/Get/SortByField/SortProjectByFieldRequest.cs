@@ -1,7 +1,8 @@
 ﻿using System.Linq.Dynamic.Core;
-namespace Application.Feature.Projects.SortByField
+
+namespace Application.Feature.Projects.Get.SortByField
 {
-    public class SortProjectByFieldRequest : IRequest<Result<IEnumerable<ProjectDtoInfo>>>
+    public record SortProjectByFieldRequest : IRequest<Result<IEnumerable<ProjectDtoInfo>>>
     {
         public string? FieldName { get; init; }
     }
@@ -17,7 +18,7 @@ namespace Application.Feature.Projects.SortByField
 
         public SortProjectByFieldHandler(IProjectRepository projectRepository)
         {
-            _projectRepository = projectRepository;
+            _projectRepository = projectRepository ?? throw new ArgumentNullException(nameof(projectRepository));
         }
 
         public async Task<Result<IEnumerable<ProjectDtoInfo>>> Handle(SortProjectByFieldRequest request, CancellationToken cancellationToken)

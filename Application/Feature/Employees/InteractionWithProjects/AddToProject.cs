@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Employees.InteractionWithProject
 {
-    public class AddEmployeeToProjectCommand : IRequest<Result>
+    public record AddEmployeeToProjectCommand : IRequest<Result>
     {
         public Guid ProjectId { get; init; }
         public Guid EmployeeId { get; init; }
@@ -37,8 +37,10 @@
             if (project == null || employee == null)
                 return Result.Fail("Project or employee not Found");
 
+            employee.Role = Domain.Enums.Role.Employee;
             project.ProjectEmployees!.Add(employee);
 
+            _employeeRepository.Update(employee);
             _projectRepository.Update(project);
             await _unitOfWork.SaveCommitAsync();
 

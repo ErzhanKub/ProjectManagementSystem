@@ -37,10 +37,11 @@ namespace Application.Feature.Employees.Login
             if (employee is not null)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email, employee.Email),
-                    new Claim(ClaimTypes.Role, employee.Role.ToString())
-                };
+        {
+            new Claim(ClaimTypes.NameIdentifier, employee.Id.ToString()),
+            new Claim(ClaimTypes.Email, employee.Email),
+            new Claim(ClaimTypes.Role, employee.Role.ToString())
+        };
                 var tokenString = GetTokenString(claims, DateTime.UtcNow.AddMinutes(30));
                 return Result.Ok(tokenString);
             }
@@ -52,7 +53,6 @@ namespace Application.Feature.Employees.Login
             var key = _configuration["Jwt"] ?? throw new Exception();
             var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key));
 
-
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: exp,
@@ -63,5 +63,6 @@ namespace Application.Feature.Employees.Login
 
             return handler.WriteToken(token);
         }
+
     }
 }

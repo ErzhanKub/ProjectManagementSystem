@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastucture.Repositories
 {
-    public class CustomTaskRepository : ICustomTaskRepository
+    public class CustomTaskRepository : ITaskRepository
     {
         private readonly AppDbContext _appDbContext;
 

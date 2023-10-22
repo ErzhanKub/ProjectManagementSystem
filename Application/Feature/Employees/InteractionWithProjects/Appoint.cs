@@ -1,6 +1,6 @@
 ﻿namespace Application.Feature.Employees.InteractionWithProject
 {
-    public class AppointEmployeeCommand : IRequest<Result>
+    public record AppointEmployeeCommand : IRequest<Result>
     {
         public Guid ProjectId { get; init; }
         public Guid EmployeeId { get; init; }

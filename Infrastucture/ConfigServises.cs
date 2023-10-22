@@ -22,7 +22,7 @@ namespace Infrastucture
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IEmployeeRepository, EmployeeRepo>();
             services.AddTransient<IProjectRepository, ProjectRepo>();
-            services.AddTransient<ICustomTaskRepository, CustomTaskRepository>();
+            services.AddTransient<ITaskRepository, CustomTaskRepository>();
 
             return services;
         }

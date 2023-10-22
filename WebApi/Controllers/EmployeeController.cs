@@ -6,6 +6,7 @@ using Application.Feature.Employees.Update;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
@@ -31,18 +32,31 @@ namespace WebApi.Controllers
             return BadRequest(result.Reasons);
         }
 
-        [Authorize(Roles = "ProjectManager,Director")]
+        [Authorize(Roles = "ProjectManager,Director,Employee")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(Guid id)
         {
+            var currentUser = HttpContext.User;
+
+            var userId = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var userRole = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            if (userRole == "Employee" && userId != id.ToString())
+            {
+                return BadRequest("Employees can only receive information about themselves");
+            }
+
             var result = await _mediator.Send(new GetOneEmployeeRequest { Id = id });
+
             if (result.IsSuccess)
                 return Ok(result.Value);
+
             return BadRequest(result.Reasons);
         }
 
+
         [HttpDelete]
-        public async Task<IActionResult> Delete(DeleteEmployeeByIdCommand command)
+        public async Task<IActionResult> Delete(DeleteEmployeeByIdsCommand command)
         {
             var result = await _mediator.Send(command);
             if (result.IsSuccess)

@@ -1,10 +1,10 @@
 ﻿namespace Application.Feature.Projects.Delete
 {
-    public record DeleteProjectByIdCommand : IRequest<Result<Guid[]>>
+    public record DeleteProjectByIdsCommand : IRequest<Result<Guid[]>>
     {
         public Guid[]? Id { get; init; }
     }
-    public class DeleteProjectValidator : AbstractValidator<DeleteProjectByIdCommand>
+    public class DeleteProjectValidator : AbstractValidator<DeleteProjectByIdsCommand>
     {
         public DeleteProjectValidator()
         {
@@ -12,7 +12,7 @@
         }
     }
 
-    public class DeleteProjectHandler : IRequestHandler<DeleteProjectByIdCommand, Result<Guid[]>>
+    public class DeleteProjectHandler : IRequestHandler<DeleteProjectByIdsCommand, Result<Guid[]>>
     {
         private readonly IProjectRepository projectRepository;
         private readonly IUnitOfWork unitOfWork;
@@ -23,7 +23,7 @@
             this.unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<Guid[]>> Handle(DeleteProjectByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Result<Guid[]>> Handle(DeleteProjectByIdsCommand request, CancellationToken cancellationToken)
         {
             var response = await projectRepository.DeleteByIdAsync(request.Id!);
             if (response != null)

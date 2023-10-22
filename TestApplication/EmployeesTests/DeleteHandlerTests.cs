@@ -19,7 +19,7 @@ namespace Application.Tests.Feature.Employees.Delete
         public async Task Handle_ValidCommand_ShouldDeleteEmployee()
         {
             // Arrange
-            var command = new DeleteEmployeeByIdCommand
+            var command = new DeleteEmployeeByIdsCommand
             {
                 Id = new Guid[] { Guid.NewGuid() }
             };
