@@ -14,69 +14,51 @@ ProjectManagementSystem is a web service for working with projects, employees an
 
 **Application layer**
 
-• FluentResults - Version="3.15.2"
-
-• FluentValidation.AspNetCore - Version="11.3.0"
-
-• Mapster - Version="7.4.0"
-
-• MediatR - Version="12.1.1"
-
-• Microsoft.IdentityModel.Tokens - Version="6.24.0"
-
-• System.IdentityModel.Tokens.Jwt - Version="6.24.0"
-
-• System.Linq.Dynamic.Core - Version="1.3.5"
-
-• ProjectReference Include = \Domain\Domain.csproj
+1) FluentResults - Version="3.15.2"
+2) FluentValidation.AspNetCore - Version="11.3.0"
+3) Mapster - Version="7.4.0"
+4) MediatR - Version="12.1.1"
+5) Microsoft.IdentityModel.Tokens - Version="6.24.0"
+6) System.IdentityModel.Tokens.Jwt - Version="6.24.0"
+7) System.Linq.Dynamic.Core - Version="1.3.5"
+8) ProjectReference Include = \Domain\Domain.csproj
 
 **Infrastructure layer**
 
-• Microsoft.EntityFrameworkCore - Version="7.0.12"
-
-• Microsoft.EntityFrameworkCore.SqlServer - Version="7.0.12"
-
-• Microsoft.EntityFrameworkCore.Tools - Version="7.0.12"
-
-• ProjectReference Include = \Application\Application.csproj
+1) Microsoft.EntityFrameworkCore - Version="7.0.12"
+2) Microsoft.EntityFrameworkCore.SqlServer - Version="7.0.12"
+3) Microsoft.EntityFrameworkCore.Tools - Version="7.0.12"
+4) ProjectReference Include = \Application\Application.csproj
 
 **WebApi(Presentation) layer**
 
-• Microsoft.AspNetCore.Authentication.JwtBearer - Version="7.0.12"
-
-• Microsoft.AspNetCore.OpenApi - Version="7.0.12"
-
-• Microsoft.EntityFrameworkCore.Design - Version="7.0.12"
-
-• Newtonsoft.Json - Version="13.0.3"
-
-• Serilog.AspNetCore - Version="7.0.0"
-
-• Serilog.Sinks.Console - Version="4.1.0"
-
-• Serilog.Sinks.File - Version="5.0.0"
-
-• Swashbuckle.AspNetCore.Swagger - Version="6.5.0"
-
-• Swashbuckle.AspNetCore.SwaggerGen - Version="6.5.0"
-
-• Swashbuckle.AspNetCore.SwaggerUI - Version="6.5.0"
-
-• ProjectReference = \Application\Application.csproj; \Infrastucture\Infrastucture.csproj
+1) Microsoft.AspNetCore.Authentication.JwtBearer - Version="7.0.12"
+2) Microsoft.AspNetCore.OpenApi - Version="7.0.12"
+3) Microsoft.EntityFrameworkCore.Design - Version="7.0.12"
+4) Newtonsoft.Json - Version="13.0.3"
+5) Serilog.AspNetCore - Version="7.0.0"
+6) Serilog.Sinks.Console - Version="4.1.0"
+7) Serilog.Sinks.File - Version="5.0.0"
+8) Swashbuckle.AspNetCore.Swagger - Version="6.5.0"
+9) Swashbuckle.AspNetCore.SwaggerGen - Version="6.5.0"
+10) Swashbuckle.AspNetCore.SwaggerUI - Version="6.5.0"
+11) ProjectReference = \Application\Application.csproj; \Infrastucture\Infrastucture.csproj
 
 **Tests layer (ApplicationTests)**
 
-• FluentAssertions - Version="6.12.0"
+1) FluentAssertions - Version="6.12.0"
+2) Microsoft.NET.Test.Sdk - Version="17.7.2"
+3) Moq - Version="4.20.69"
+4) xunit - Version="2.5.3"
+5) xunit.runner.visualstudio - Version="2.5.3"
+6) ProjectReference = \Application\Application.csproj; \Domain\Domain.csproj
 
-• Microsoft.NET.Test.Sdk - Version="17.7.2"
+# To install and run the project you need:
 
-• Moq - Version="4.20.69"
-
-• xunit - Version="2.5.3"
-
-• xunit.runner.visualstudio - Version="2.5.3"
-
-• ProjectReference = \Application\Application.csproj; \Domain\Domain.csproj
+1) Download and install the development environment.
+2) Download and install MS SQL Server 2023 or higher database.
+3) Clone the project repository from GitHub.
+4) Perform a database migration using the Update-Database command in the Package Manager Console.
 
 # Бизнес логика / Business logic
 
